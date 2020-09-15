@@ -18,8 +18,9 @@ A few things that I took away from this are:
 Next steps would be to:
   1. Examine how the recent string of fires has affected ridership (or maybe how much, it has affected ridership) 
   2. Look more into historical records about hourly ridership
-    a. See how it changes by season (are commutes at all similar to the sunrise/sunset)
-    b. Has the ratio of commuters changed in the past decade
+  3. See how it changes by season (are commutes at all similar to the sunrise/sunset)
+  4. Has the ratio of commuters changed in the past decade
+
     
     
 Thanks, hope it's interesting and/or informative
