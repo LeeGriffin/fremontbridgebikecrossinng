@@ -38,7 +38,7 @@ covid_riders_nb <- window(hourly_riders_nb, start="2020-01-01")
 autoplot(covid_riders_nb)
 
 
-##########I do not like doing this but here it is making a ts object to make a pretty graph#######
+##### I do not like doing this but here it is making a ts object to make a pretty graph #######
 
 ts <- ts(covid_riders_nb, frequency = 24)
 ggseasonplot(ts, year.labels = TRUE) +
@@ -49,7 +49,7 @@ ggseasonplot(ts, year.labels = TRUE) +
 
 #####I think going back here and doing some more analysis on ridership per day would be intrestsing 
 
-################next step is to collapse the data into days#######################################
+################ Next step is to collapse the data into days.      ############################
 
 df_day <- df %>% mutate(as.Date(date))
 df_day <- df_day %>% rename(
@@ -59,7 +59,7 @@ df_day <- df_day %>% rename(
 aggdata <-aggregate(df_day, by=list(df_day$date_day),
                     FUN=mean, na.rm=TRUE)
 
-############might as well just show sums per day#################
+################    Might as well just show sums per day                 ######################
 
 aggdata$fremont_bridge_nb <- aggdata$fremont_bridge_nb*24
 aggdata$fremont_bridge_sb <- aggdata$fremont_bridge_sb*24
@@ -67,7 +67,7 @@ aggdata$fremont_bridge_nb <- as.integer(aggdata$fremont_bridge_nb)
 aggdata$fremont_bridge_sb <- as.integer(aggdata$fremont_bridge_sb)
  
 
-################### Um, sidenote here, I wonder how different north/south are ###########################
+################ Um, sidenote here, I wonder how different north/south are   #################
 
 aggdata$diff <- aggdata$fremont_bridge_nb - aggdata$fremont_bridge_sb #so + is more north - is more south
 
@@ -96,8 +96,7 @@ daily_riders_north_2020 <- window(daily_riders_north,start="2020-01-01", end = "
 daily_riders_north_2019 <- window(daily_riders_north, start = "2019-01-01", end = "2019-08-31" ) #only have data till 8-31
 
 
-
-#############final plot##################################################################
+############         Final plot                                         ######################
 
 daily_riders_north_2020_ts <- ts(daily_riders_north_2020, frequency = 7)
 daily_riders_north_2019_ts <- ts(daily_riders_north_2019,, frequency = 7)
@@ -118,3 +117,6 @@ autoplot(comb_ts_f,
          lwd = 1,
          xlab = "Weeks",
          ylab = "Riders per Day")+ scale_colour_manual(values=pallete) #2nd good chart
+
+
+#Thats all for now folks :) 
