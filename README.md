@@ -20,6 +20,7 @@ Next steps would be to:
   2. Look more into historical records about hourly ridership
   3. See how it changes by season (are commutes at all similar to the sunrise/sunset)
   4. Has the ratio of commuters changed in the past decade
+  5. Why more people go north than south on the bridge...
 
     
     
