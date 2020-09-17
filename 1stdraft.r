@@ -14,8 +14,7 @@ df <- read.socrata(
   "https://data.seattle.gov/resource/7mre-hcut.json",
   app_token = "Your_app_token_here",
   email     = "Your_email",
-  password  = "Your_password"
-)
+  password  = "Your_password")
 
 df <- na.omit(df)
 df$fremont_bridge_nb <- as.integer(df$fremont_bridge_nb)
@@ -53,8 +52,7 @@ ggseasonplot(ts, year.labels = TRUE) +
 
 df_day <- df %>% mutate(as.Date(date))
 df_day <- df_day %>% rename(
-    `date_day` =`as.Date(date)`
-  )
+    `date_day` =`as.Date(date)`)
 
 aggdata <-aggregate(df_day, by=list(df_day$date_day),
                     FUN=mean, na.rm=TRUE)
@@ -83,29 +81,40 @@ autoplot(daily_riders_diff)
 ################   Intresting, looks like more people are riding north   ######################
 ################   Wonder if there is an easier way back or someting?    ######################
 
-################   Lets Just look at northbound ridership                ######################
+################   Now lets look at total crossings                      ######################
+################   How covid/lockdown has affected traffic               ######################
 
-daily_riders_north <- zoo(
-  x         = aggdata[["fremont_bridge_nb"]],
+
+aggdata$total_riders <- aggdata$fremont_bridge_nb + aggdata$fremont_bridge_sb #so + is more north - is more south
+
+
+daily_riders_total <- zoo(
+  x         = aggdata[["total_riders"]],
   order.by  = aggdata[["date_day"]],
   frequency = 7)
 
-autoplot(daily_riders_north_2019) ####okay everything lines up
 
-daily_riders_north_2020 <- window(daily_riders_north,start="2020-01-01", end = "2020-08-31" ) #only have data till 8-31
-daily_riders_north_2019 <- window(daily_riders_north, start = "2019-01-01", end = "2019-08-31" ) #only have data till 8-31
+daily_riders_total_2020 <- window(daily_riders_total,start="2020-01-01", end = "2020-09-01" ) #only have data till 9-01
+daily_riders_total_2019 <- window(daily_riders_total, start = "2019-01-01", end = "2019-09-01" ) #only have data till 9-01
 
 
-############         Final plot                                         ######################
+autoplot(daily_riders_total_2020) ####okay everything lines up
 
-daily_riders_north_2020_ts <- ts(daily_riders_north_2020, frequency = 7)
-daily_riders_north_2019_ts <- ts(daily_riders_north_2019,, frequency = 7)
 
-comb_ts <- cbind(daily_riders_north_2020_ts, daily_riders_north_2019_ts)
+
+#############                         Final Plot             #############################
+
+
+
+daily_riders_total_2020_ts <- ts(daily_riders_total_2020, frequency = 7)
+daily_riders_total_2019_ts <- ts(daily_riders_total_2019, frequency = 7)
+
+comb_ts <- cbind(daily_riders_total_2020_ts, daily_riders_total_2019_ts)
 
 decomp <- (decompose(comb_ts))
 trend <- (decomp$trend)
 comb_ts_f <- cbind(comb_ts,trend)
+
 
 colnames(comb_ts_f) <- c("2020_Actual", "2019_Actual", "2020_Trend", "2019_Trend")
 
@@ -119,4 +128,34 @@ autoplot(comb_ts_f,
          ylab = "Riders per Day")+ scale_colour_manual(values=pallete) #2nd good chart
 
 
-#Thats all for now folks :) 
+################## So way less riders than before, but still no real increse right? ##########
+
+##################      Well lets zoom in on the most recent months of 2020            ##########
+
+
+daily_riders_total_forcast <- window(daily_riders_total, start = "2020-05-01", end = "2020-09-01" ) #only have data till 9-01
+print(daily_riders_total_forcast)
+
+daily_riders_total_forcast_ts <- ts(daily_riders_total_forcast, frequency = 7)
+
+print(daily_riders_total_forcast_ts)
+decomp <- (decompose(daily_riders_total_forcast_ts))
+plot(decomp)
+
+linearMod <- tslm(daily_riders_total_forcast_ts ~ trend + season)  # build linear regression model
+
+library(texreg)
+screenreg(linearMod)
+
+###         trend         5.92 ***
+###                       (1.35) 
+###         So we got this postive trend goign on, about 6 new riders a day 
+
+autoplot(forecast(linearMod)) #is it a good forcast, no, is it kinda fun to look at, yeah
+
+######################################################################################
+
+#Looks like ridership is starting to increse, but at a pretty slow pace
+#Still not a ton of commuters though
+
+######################################################################################
