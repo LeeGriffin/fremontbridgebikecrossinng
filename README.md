@@ -7,7 +7,7 @@ But wanted to look at how Covid-19 and the lockdown affected bike traffic throug
 
 Um it's all in R and it pulls data right from the Seattle data api (https://data.seattle.gov) 
 
-There are a couple different tangents going on, but the end results compares ridership by day in 2019 to 2020. With actual daily counts as well as the trendlines.
+There are a couple different tangents going on, but the end results compares ridership by day in 2019 to 2020. With actual daily counts as well as some stuff on trends.
 
 A few things that I took away from this are:
   1. More people commuted into seattle in 2020 than out of seattle via bike (spoiler alert)
