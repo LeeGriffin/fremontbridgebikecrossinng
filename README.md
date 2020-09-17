@@ -12,7 +12,7 @@ There are a couple different tangents going on, but the end results compares rid
 A few things that I took away from this are:
   1. More people commuted into seattle in 2020 than out of seattle via bike (spoiler alert)
   2. The lockdown correlates to a drastic decrease in daily bikers (2nd spoiler alert)
-  3. The number of bikers is not going up or down and has been pretty constant throughout summer (A little more interesting) 
+  3. The number of bikers is trending upwards (very slowly) (A little more intresting) 
   
   
 Next steps would be to:
