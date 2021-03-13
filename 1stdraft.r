@@ -9,13 +9,15 @@ library(forecast, quietly = TRUE)
 library(texreg, quietly = TRUE)
 
 
-#they have pretty good intrustions on the socrata or seattle data web sites 
+#they have pretty good instructions on the socrata or Seattle data web sites 
+#but you will need to add your own app_token, email, and password :) 
+#in case it was not clear, your will also need to have those packages installed (probably going to be asked to install broom as well)
 
 df <- read.socrata(
   "https://data.seattle.gov/resource/7mre-hcut.json",
-  app_token = "Your_app_token_here",
-  email     = "Your_email",
-  password  = "Your_password")
+  app_token = "7mzZjSmMCKGYC9cVREJWHD5ZY",
+  email     = "leegriffin54@gmail.com",
+  password  = "Lakeview21!")
 
 df <- na.omit(df)
 df$fremont_bridge_nb <- as.integer(df$fremont_bridge_nb)
@@ -34,8 +36,8 @@ autoplot(hourly_riders_nb)#well there was a clearupward trend....
 
 ################   Northbound riders by hour           ##########
 
-lockdown_2020 <- window(hourly_riders_nb, start="2020-02-19", end="2020-08-31") #First case in WA was feb 19th
-normal_2019 <- window(hourly_riders_nb, start="2019-02-19", end="2019-08-31")
+lockdown_2020 <- window(hourly_riders_nb, start="2020-02-19", end="2021-02-19") #First case in WA was feb 19th
+normal_2019 <- window(hourly_riders_nb, start="2019-02-19", end="2020-02-18")
 lockdown_riders_hour <- cbind(lockdown_2020,normal_2019)
 
 autoplot(lockdown_riders_hour,
@@ -157,14 +159,14 @@ screenreg(linearMod)
 
 ###         trend         5.92 ***
 ###                       (1.35) 
-###         So we got this postive trend going on, about 6 new riders a day 
+###         So we got this postive trend going on, about 6 new riders a day, heads up that comment is from aug 2020
 
-autoplot(forecast(linearMod)) #is it a good forcast? no, is it kinda fun to look at, yeah
+autoplot(forecast(linearMod)) #is it a good forecast? no, is it kinda fun to look at, yeah
 
 
 ######################################################################################
 
-#Looks like ridership is starting to increse, but at a pretty slow pace
+#Looks like ridership is starting to increase, but at a pretty slow pace
 #Still not a ton of commuters though
 
 ######################################################################################
