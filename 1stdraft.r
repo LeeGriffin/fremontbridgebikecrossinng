@@ -15,9 +15,9 @@ library(texreg, quietly = TRUE)
 
 df <- read.socrata(
   "https://data.seattle.gov/resource/7mre-hcut.json",
-  app_token = "7mzZjSmMCKGYC9cVREJWHD5ZY",
-  email     = "leegriffin54@gmail.com",
-  password  = "Lakeview21!")
+  app_token = "you app token goes here",
+  email     = "email",
+  password  = "")
 
 df <- na.omit(df)
 df$fremont_bridge_nb <- as.integer(df$fremont_bridge_nb)
